@@ -49,6 +49,27 @@ function handleResult(resultData) {
         "<p>Year: " + resultData[0]["movie_year"] + "</p>" +
         "<p>Director: " + resultData[0]["movie_director"] + "</p>");
 
+
+
+    let rowHTML = "";
+
+    let genres = "";
+    for (let j = 0; j < resultData[0]["movie_genres"].length; j++){
+        genres += resultData[0]["movie_genres"][j] + ", ";
+    }
+    rowHTML += "<p>Genres: " + genres.slice(0, -2) + "</p>";
+
+    let stars = "";
+    for (let j = 0; j < resultData[0]["movie_stars"].length; j++){
+        stars += resultData[0]["movie_stars"][j] + ", ";
+    }
+    rowHTML += "<p>Stars: " + stars.slice(0, -2) + "</p>";
+    rowHTML += "<p>Rating: " + resultData[0]["movie_rating"] + "</p>";
+
+
+    // Append the row created to the table body, which will refresh the page
+    starInfoElement.append(rowHTML);
+
     console.log("handleResult: populating movie table from resultData");
 
     // Populate the star table

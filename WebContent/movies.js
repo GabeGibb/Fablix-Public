@@ -40,7 +40,8 @@ function handleStarResult(resultData) {
 
         let stars = "";
         for (let j = 0; j < Math.min(3, resultData[i]["movie_stars"].length); j++){
-            stars += resultData[i]["movie_stars"][j] + ", ";
+            stars += '<a href="single-star.html?id=' + resultData[i]["movie_stars_id"][j] + '>' +
+                resultData[i]["movie_stars"][j] + ", " + '</a>';
         }
         rowHTML += "<th>" + stars.slice(0, -2) + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";

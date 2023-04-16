@@ -81,7 +81,7 @@ public class MoviesServlet extends HttpServlet {
 
 
 
-                String starQ = "SELECT stars.name \n" +
+                String starQ = "SELECT stars.name, stars.id \n" +
                         "FROM stars, movies, stars_in_movies\n" +
                         "WHERE movies.id = stars_in_movies.movieId\n" +
                         "AND stars_in_movies.starId = stars.id\n" +
@@ -89,8 +89,10 @@ public class MoviesServlet extends HttpServlet {
                 Statement starStatement = conn.createStatement();
                 ResultSet starR = starStatement.executeQuery(starQ);
                 JsonArray stars = new JsonArray();
+                JsonArray starsId = new JsonArray();
                 while (starR.next()){
                     stars.add(starR.getString("name"));
+                    starsId.add(starR.getString("id"));
                 }
 
 
@@ -106,6 +108,7 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", director);
                 jsonObject.add("movie_genres", genres);
                 jsonObject.add("movie_stars", stars);
+                jsonObject.add("movie_stars_id", starsId);
                 jsonObject.addProperty("movie_rating", rating);
                 jsonArray.add(jsonObject);
             }
