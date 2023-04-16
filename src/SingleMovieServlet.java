@@ -55,7 +55,8 @@ public class SingleMovieServlet extends HttpServlet {
             // Construct a query with parameter represented by "?"
             String query = "SELECT * \n" +
                     "FROM ratings, movies\n" +
-                    "WHERE movies.id = '" + id + "'";
+                    "WHERE movies.id = '" + id + "'" +
+                    "AND ratings.movieId = movies.id";
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
@@ -71,10 +72,12 @@ public class SingleMovieServlet extends HttpServlet {
 
             // Iterate through each row of rs
             while (rs.next()) {
+
                 String title = rs.getString("title");
                 String year = rs.getString("year");
                 String director = rs.getString("director");
                 String rating = rs.getString("rating");
+                System.out.println(rating);
 
                 String genreQ = "SELECT genres.name \n" +
                         "FROM genres, movies, genres_in_movies\n" +
@@ -90,7 +93,7 @@ public class SingleMovieServlet extends HttpServlet {
 
 
 
-                String starQ = "SELECT stars.name \n" +
+                String starQ = "SELECT stars.name, stars.id \n" +
                         "FROM stars, movies, stars_in_movies\n" +
                         "WHERE movies.id = stars_in_movies.movieId\n" +
                         "AND stars_in_movies.starId = stars.id\n" +
@@ -99,8 +102,10 @@ public class SingleMovieServlet extends HttpServlet {
                 Statement starStatement = conn.createStatement();
                 ResultSet starR = starStatement.executeQuery(starQ);
                 JsonArray stars = new JsonArray();
+                JsonArray starsId = new JsonArray();
                 while (starR.next()){
                     stars.add(starR.getString("name"));
+                    starsId.add(starR.getString("id"));
                 }
 
 //                String genres = rs.getString("birthYear");
@@ -114,6 +119,7 @@ public class SingleMovieServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", director);
                 jsonObject.add("movie_genres", genres);
                 jsonObject.add("movie_stars", stars);
+                jsonObject.add("movie_stars_id", starsId);
                 jsonObject.addProperty("movie_rating", rating);
                 jsonArray.add(jsonObject);
             }

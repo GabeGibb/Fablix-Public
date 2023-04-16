@@ -45,7 +45,7 @@ function handleResult(resultData) {
     let starInfoElement = jQuery("#movie_info");
 
     // append two html <p> created to the h3 body, which will refresh the page
-    starInfoElement.append("<p>Movie Name: " + resultData[0]["movie_title"] + "</p>" +
+    starInfoElement.append("<p>Title: " + resultData[0]["movie_title"] + "</p>" +
         "<p>Year: " + resultData[0]["movie_year"] + "</p>" +
         "<p>Director: " + resultData[0]["movie_director"] + "</p>");
 
@@ -61,9 +61,10 @@ function handleResult(resultData) {
 
     let stars = "";
     for (let j = 0; j < resultData[0]["movie_stars"].length; j++){
-        stars += resultData[0]["movie_stars"][j] + ", ";
+        stars += '<a href="single-star.html?id=' + resultData[0]["movie_stars_id"][j] + '">' +
+            resultData[0]["movie_stars"][j] + ", " + '</a>';
     }
-    rowHTML += "<p>Stars: " + stars.slice(0, -2) + "</p>";
+    rowHTML += "<p>Stars: " + stars + "</p>";
     rowHTML += "<p>Rating: " + resultData[0]["movie_rating"] + "</p>";
 
 
