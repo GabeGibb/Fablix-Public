@@ -83,7 +83,8 @@ public class SingleMovieServlet extends HttpServlet {
                         "FROM genres, movies, genres_in_movies\n" +
                         "WHERE movies.id = genres_in_movies.movieId\n" +
                         "AND genres_in_movies.genreId = genres.id\n" +
-                        "AND movies.id = '" + id + "'";
+                        "AND movies.id = '" + id + "'" +
+                        "ORDER BY genres.name ASC;";
                 Statement genreStatement = conn.createStatement();
                 ResultSet genreR = genreStatement.executeQuery(genreQ);
                 JsonArray genres = new JsonArray();

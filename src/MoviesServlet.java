@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import jakarta.servlet.annotation.WebInitParam;
 
 
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/stars"
@@ -38,6 +39,46 @@ public class MoviesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json"); // Response mime type
 
+        String urlTitle = request.getParameter("title");
+        String urlYear = request.getParameter("year");
+        String urlDirector = request.getParameter("director");
+        String urlStar = request.getParameter("star");
+        String urlGenre = request.getParameter("genre");
+
+
+        String urlStartNumber = request.getParameter("start");
+        if (urlStartNumber == null){
+            urlStartNumber = "0";
+        }
+
+        String urlNumber = request.getParameter("n");
+        if (urlNumber == null){
+            urlNumber = "25";
+        }
+
+
+        String qOptions = "";
+
+        if(urlYear != "" && urlYear != null){
+            qOptions += " AND movies.year = " + urlYear + " ";
+        }if(urlDirector != "" && urlDirector != null){
+            qOptions += " AND movies.director LIKE '%" + urlDirector + "%' ";
+        }if(urlStar != "" && urlStar != null){
+            qOptions += " AND stars.name LIKE '%" + urlStar + "%' ";
+        }if(urlGenre != "" && urlGenre != null){
+            qOptions += " AND genres.name = '" + urlGenre + "' ";
+        }if (urlTitle != "" && urlTitle != null){
+            if (urlTitle.startsWith("*")){
+//                if (urlTitle.equals("*")){
+//                    qOptions += " AND movies.title LIKE '%[^a-zA-Z0-9]%' ";
+//                }else{
+                qOptions += " AND movies.title LIKE '" + urlTitle.substring(1) + "%' ";
+//                }
+            }else{
+                qOptions += " AND movies.title LIKE '%" + urlTitle + "%' ";
+            }
+        }
+
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
@@ -47,11 +88,22 @@ public class MoviesServlet extends HttpServlet {
             // Declare our statement
             Statement statement = conn.createStatement();
 
-            String query = "SELECT * \n" +
-                    "FROM ratings, movies\n" +
-                    "WHERE movies.id = ratings.movieId\n" +
+            String query = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating \n" +
+                    "FROM ratings, movies, stars, stars_in_movies, genres, genres_in_movies\n" +
+                    "WHERE movies.id = ratings.movieId\n" + qOptions +
+                    "AND genres_in_movies.genreId = genres.id\n" +
+                    "AND genres_in_movies.movieId = movies.id\n" +
+                    "AND stars.id = stars_in_movies.starId\n" +
+                    "AND stars_in_movies.movieId = movies.id\n" +
                     "ORDER BY ratings.rating DESC\n" +
-                    "LIMIT 20";
+                    "LIMIT " + urlStartNumber + ", " + urlNumber + ";";
+            if (urlTitle != null && urlTitle.equals("*")){
+                query = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating\n" +
+                        "FROM ratings, movies\n" +
+                        "WHERE movies.id = ratings.movieId\n" +
+                        "ORDER BY movies.title ASC\n" +
+                        "LIMIT 11;";
+            }
 
             // Perform the query
             ResultSet rs = statement.executeQuery(query);
@@ -66,16 +118,20 @@ public class MoviesServlet extends HttpServlet {
                 String director = rs.getString("director");
                 String rating = rs.getString("rating");
 
-                String genreQ = "SELECT genres.name \n" +
+                String genreQ = "SELECT genres.name, genres.id \n" +
                         "FROM genres, movies, genres_in_movies\n" +
                         "WHERE movies.id = genres_in_movies.movieId\n" +
                         "AND genres_in_movies.genreId = genres.id\n" +
-                        "AND movies.title = '" + title + "'";
+                        "AND movies.title = '" + title + "' " +
+                        "ORDER BY genres.name ASC;";
+
                 Statement genreStatement = conn.createStatement();
                 ResultSet genreR = genreStatement.executeQuery(genreQ);
                 JsonArray genres = new JsonArray();
+//                JsonArray genresId = new JsonArray();
                 while (genreR.next()){
                     genres.add(genreR.getString("name"));
+//                    genresId.add(genreR.getString("id"));
                 }
 
 
@@ -84,7 +140,8 @@ public class MoviesServlet extends HttpServlet {
                         "FROM stars, movies, stars_in_movies\n" +
                         "WHERE movies.id = stars_in_movies.movieId\n" +
                         "AND stars_in_movies.starId = stars.id\n" +
-                        "AND movies.title = '" + title + "'";
+                        "AND movies.title = '" + title + "' ";
+//                        "ORDER BY COUNT(movies.id) DESC";
                 Statement starStatement = conn.createStatement();
                 ResultSet starR = starStatement.executeQuery(starQ);
                 JsonArray stars = new JsonArray();
@@ -95,10 +152,6 @@ public class MoviesServlet extends HttpServlet {
                 }
 
 
-
-//                String genres = rs.getString("birthYear");
-//                String stars = rs.getString("birthYear");
-//                String rating = rs.getString("birthYear");
                 // Create a JsonObject based on the data we retrieve from rs
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("movie_id", id);
@@ -106,6 +159,7 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_year", year);
                 jsonObject.addProperty("movie_director", director);
                 jsonObject.add("movie_genres", genres);
+//                jsonObject.add("movie_genres_id", genresId);
                 jsonObject.add("movie_stars", stars);
                 jsonObject.add("movie_stars_id", starsId);
                 jsonObject.addProperty("movie_rating", rating);

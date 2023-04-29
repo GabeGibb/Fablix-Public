@@ -55,7 +55,9 @@ function handleResult(resultData) {
 
     let genres = "";
     for (let j = 0; j < resultData[0]["movie_genres"].length; j++){
-        genres += resultData[0]["movie_genres"][j] + ", ";
+        // genres += resultData[0]["movie_genres"][j] + ", ";
+        genres += '<a href="movies.html?genre='+ resultData[0]["movie_genres"][j] + '">' +
+            resultData[0]["movie_genres"][j] + ", " + '</a>';
     }
     rowHTML += "<p>Genres: " + genres.slice(0, -2) + "</p>";
 
@@ -73,22 +75,7 @@ function handleResult(resultData) {
 
     console.log("handleResult: populating movie table from resultData");
 
-    // Populate the star table
-    // Find the empty table body by id "movie_table_body"
-    // let movieTableBodyElement = jQuery("#movie_table_body");
-    //
-    // // Concatenate the html tags with resultData jsonObject to create table rows
-    // for (let i = 0; i < Math.min(10, resultData.length); i++) {
-    //     let rowHTML = "";
-    //     rowHTML += "<tr>";
-    //     rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
-    //     rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
-    //     rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-    //     rowHTML += "</tr>";
-    //
-    //     // Append the row created to the table body, which will refresh the page
-    //     movieTableBodyElement.append(rowHTML);
-    // }
+
 }
 
 /**
