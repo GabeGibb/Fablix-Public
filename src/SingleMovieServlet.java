@@ -98,7 +98,8 @@ public class SingleMovieServlet extends HttpServlet {
                         "FROM stars, movies, stars_in_movies\n" +
                         "WHERE movies.id = stars_in_movies.movieId\n" +
                         "AND stars_in_movies.starId = stars.id\n" +
-                        "AND movies.id = '" + id + "'";
+                        "AND movies.id = '" + id + "' " +
+                        "ORDER BY stars.name;";;
 
                 Statement starStatement = conn.createStatement();
                 ResultSet starR = starStatement.executeQuery(starQ);

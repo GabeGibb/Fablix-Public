@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import jakarta.servlet.annotation.WebInitParam;
+import jakarta.servlet.http.HttpSession;
 
 
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/stars"
@@ -25,18 +26,46 @@ public class MoviesServlet extends HttpServlet {
     // Create a dataSource which registered in web.
     private DataSource dataSource;
 
+    private static String pastUrl = "";
     public void init(ServletConfig config) {
         try {
             dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedb");
         } catch (NamingException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        StringBuilder requestURL = new StringBuilder(request.getRequestURL().toString());
+        String queryString = request.getQueryString();
+        String fullUrl;
+        String newUrl = "";
+        if (queryString == null) {
+            fullUrl = requestURL.toString();
+            newUrl = pastUrl;
+        } else {
+            fullUrl = requestURL.append('?').append(queryString).toString();
+        }
+
+        fullUrl = fullUrl.replace("api/movies", "movies.html");
+
+        pastUrl = fullUrl;
+
+//        if (!pastUrl.equals(fullUrl) && !pastUrl.equals("")){
+////            response.sendRedirect(pastUrl);
+////            newUrl = pastUrl;
+//        }else{
+//            pastUrl = fullUrl;
+//        }
+
+//        System.out.println(pastUrl);
+
+
+
         response.setContentType("application/json"); // Response mime type
 
         String urlTitle = request.getParameter("title");
@@ -55,6 +84,22 @@ public class MoviesServlet extends HttpServlet {
         if (urlNumber == null){
             urlNumber = "25";
         }
+
+        String sortT = request.getParameter("ordert");
+        String sortR = request.getParameter("orderr");
+        String first = request.getParameter("first");
+        String order = " ORDER BY ";
+
+        if (sortT == null || sortR == null || first == null){
+            order += "ratings.rating DESC, movies.title ASC ";
+        }else{
+            if (first.equals("Title")){
+                order += "movies.title " + sortT + ", ratings.rating " + sortR + " ";
+            }else{
+                order += "ratings.rating " + sortR + ", movies.title " + sortT + " ";
+            }
+        }
+
 
 
         String qOptions = "";
@@ -95,13 +140,13 @@ public class MoviesServlet extends HttpServlet {
                     "AND genres_in_movies.movieId = movies.id\n" +
                     "AND stars.id = stars_in_movies.starId\n" +
                     "AND stars_in_movies.movieId = movies.id\n" +
-                    "ORDER BY ratings.rating DESC\n" +
+                    order +
                     "LIMIT " + urlStartNumber + ", " + urlNumber + ";";
             if (urlTitle != null && urlTitle.equals("*")){
                 query = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating\n" +
                         "FROM ratings, movies\n" +
                         "WHERE movies.id = ratings.movieId\n" +
-                        "ORDER BY movies.title ASC\n" +
+                        order +
                         "LIMIT 11;";
             }
 
@@ -110,6 +155,9 @@ public class MoviesServlet extends HttpServlet {
 
             JsonArray jsonArray = new JsonArray();
 
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("new_url", newUrl);
+            jsonArray.add(jsonObject);
             // Iterate through each row of rs
             while (rs.next()) {
                 String id = rs.getString("id");
@@ -140,7 +188,8 @@ public class MoviesServlet extends HttpServlet {
                         "FROM stars, movies, stars_in_movies\n" +
                         "WHERE movies.id = stars_in_movies.movieId\n" +
                         "AND stars_in_movies.starId = stars.id\n" +
-                        "AND movies.title = '" + title + "' ";
+                        "AND movies.title = '" + title + "' " +
+                        "ORDER BY stars.name;";
 //                        "ORDER BY COUNT(movies.id) DESC";
                 Statement starStatement = conn.createStatement();
                 ResultSet starR = starStatement.executeQuery(starQ);
@@ -153,7 +202,7 @@ public class MoviesServlet extends HttpServlet {
 
 
                 // Create a JsonObject based on the data we retrieve from rs
-                JsonObject jsonObject = new JsonObject();
+                jsonObject = new JsonObject();
                 jsonObject.addProperty("movie_id", id);
                 jsonObject.addProperty("movie_title", title);
                 jsonObject.addProperty("movie_year", year);
@@ -165,6 +214,8 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_rating", rating);
                 jsonArray.add(jsonObject);
             }
+
+
             rs.close();
             statement.close();
 

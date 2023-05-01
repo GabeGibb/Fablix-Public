@@ -69,6 +69,21 @@ function nextPage(){
 }
 
 
+function sortMovies(){
+    let url2 = window.location.href;
+    // url2 = url2.replace('movies.html', 'api/movies')
+    let sortDir1 = document.getElementById('sortDirTitle').value
+    let sortDir2 = document.getElementById('sortDirRating').value
+    let sortBy = document.getElementById('sortBy').value
+
+    let newUrl = new URL(url2)
+
+    newUrl.searchParams.set('ordert', sortDir1)
+    newUrl.searchParams.set('orderr', sortDir2)
+    newUrl.searchParams.set('first', sortBy)
+    location.href = newUrl.toString();
+}
+
 
 // function sortTitle(dir){
 //
@@ -79,12 +94,16 @@ function nextPage(){
 // }
 
 function handleStarResult(resultData) {
-    console.log("handleStarResult: populating star table from resultData");
+
+    console.log(resultData);
 
     let starTableBodyElement = jQuery("#movie_table_body");
 
+    if (resultData[0]["new_url"] != ''){
 
-    for (let i = 0; i < resultData.length; i++) {
+        window.location.href = resultData[0]["new_url"];
+    }
+    for (let i = 1; i < resultData.length; i++) {
         // Concatenate the html tags with resultData jsonObject
         let rowHTML = "";
         rowHTML += "<tr>";
@@ -111,7 +130,13 @@ function handleStarResult(resultData) {
         }
         rowHTML += "<th>" + stars.slice(0, -2) + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+
+        rowHTML += "<th>" + "Add To Cart" + "</th>";
+
+
         rowHTML += "</tr>";
+
+
 
         // Append the row created to the table body, which will refresh the page
         starTableBodyElement.append(rowHTML);
