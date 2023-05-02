@@ -70,11 +70,15 @@ function handleCartData(dataString){
             cartHtml += '<li id="' + id + '" value="1">Title: ' + title + ' | Id: ' + id + ' | Price: $10 | Num: '
                 + '<button onclick="deleteMovie(\'' + id + '\', \'' + title + '\')">Remove Movie</button>'
                 + '<button onclick="decrement(\'' + id + '\', \'' + title + '\')">-</button>'
-                + '<button onclick="increment(\'' + id + '\', \'' + title + '\')">+</button>' + '</li>'
+                + '<button onclick="increment(\'' + id + '\', \'' + title + '\')">+</button>1' + '</li>';
+
         }
         else{
             movie.value += 1;
+            movie.innerHTML = movie.innerHTML.slice(0, -1);
+            movie.innerHTML += movie.value;
         }
+
 
     }
     // cartHtml += 'TOTAL PRICE: $' + movies.length * 10;
