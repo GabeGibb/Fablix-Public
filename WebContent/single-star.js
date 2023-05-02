@@ -21,7 +21,7 @@ function getParameterByName(target) {
  */
 
 function handleResult(resultData) {
-
+    console.log(resultData);
     console.log("handleResult: populating star info from resultData");
 
     // populate the star info h3
@@ -42,7 +42,7 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#movie_table_body");
 
 
-    for (let i = 0; i < 10, resultData.length; i++) {
+    for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += '<th><a href="single-movie.html?id=' + resultData[i]["movie_id"] + '">' + resultData[i]["movie_title"] + "</a></th>";

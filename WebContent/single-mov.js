@@ -62,8 +62,6 @@ function handleResult(resultData) {
 
     let rowHTML = "";
 
-    rowHTML += "<th>" + "<button onclick='addToCart(" + '"' + resultData[0]['movie_id'] + '", "' +
-        resultData[0]['movie_title'] + '"' + ")'>"  + "Add To Cart" + "</button></th>";
 
     let genres = "";
     for (let j = 0; j < resultData[0]["movie_genres"].length; j++){
@@ -78,10 +76,11 @@ function handleResult(resultData) {
         stars += '<a href="single-star.html?id=' + resultData[0]["movie_stars_id"][j] + '">' +
             resultData[0]["movie_stars"][j] + ", " + '</a>';
     }
-    rowHTML += "<p>Stars: " + stars + "</p>";
+    rowHTML += "</a><p>Stars: " + stars + "</p>";
     rowHTML += "<p>Rating: " + resultData[0]["movie_rating"] + "</p>";
 
-
+    rowHTML += "<p>" + "<button onclick='addToCart(" + '"' + resultData[0]['movie_id'] + '", "' +
+        resultData[0]['movie_title'] + '"' + ")'>"  + "Add To Cart" + "</button></p>";
     // Append the row created to the table body, which will refresh the page
     starInfoElement.append(rowHTML);
 
