@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
             // Declare our statement
             Statement statement = conn.createStatement();
 
-            String query = "SELECT customers.email, customers.password \n" +
+            String query = "SELECT customers.email, customers.password, customers.id \n" +
                     "FROM customers\n" +
                     "WHERE customers.email = '" + username + "';";
 
@@ -55,9 +55,11 @@ public class LoginServlet extends HttpServlet {
 
             String dbUsername = "";
             String dbPassword = "";
+            String dbId = "";
             while (rs.next()) {
                 dbUsername = rs.getString("email");
                 dbPassword = rs.getString("password");
+                dbId = rs.getString("id");
             }
 
             rs.close();
@@ -69,6 +71,7 @@ public class LoginServlet extends HttpServlet {
 
                 // set this user into the session
                 request.getSession().setAttribute("user", new User(username));
+                request.getSession().setAttribute("customerId", dbId);
 
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");

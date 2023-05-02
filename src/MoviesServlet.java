@@ -146,7 +146,7 @@ public class MoviesServlet extends HttpServlet {
                 query = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating\n" +
                         "FROM ratings, movies\n" +
                         "WHERE movies.id = ratings.movieId\n" +
-                        order +
+                        "ORDER BY movies.title " +
                         "LIMIT 11;";
             }
 

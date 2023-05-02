@@ -31,6 +31,15 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+
+function addToCart(id, title){
+    $.ajax("api/cart?id=" + id + "&title=" + title, {
+        method: "POST",
+    });
+    alert("added to cart!");
+}
+
+
 /**
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
@@ -52,6 +61,9 @@ function handleResult(resultData) {
 
 
     let rowHTML = "";
+
+    rowHTML += "<th>" + "<button onclick='addToCart(" + '"' + resultData[0]['movie_id'] + '", "' +
+        resultData[0]['movie_title'] + '"' + ")'>"  + "Add To Cart" + "</button></th>";
 
     let genres = "";
     for (let j = 0; j < resultData[0]["movie_genres"].length; j++){

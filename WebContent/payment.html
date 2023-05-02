@@ -2,10 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Payments</title>
 </head>
 <body>
 <a href="cart.html">Go To Cart</a>
+
+<ul id="cart_list"></ul>
+
+<h2 id="total_cost">0</h2>
+
+<h2>Payment</h2>
+
+<form id="pay_form" method="post" action="#">
+    <label><b>First Name</b></label>
+    <label>
+        <input name="first_name" placeholder="Enter First Name" type="text">
+    </label>
+    <br>
+    <label><b>Last Name</b></label>
+    <label>
+        <input name="last_name" placeholder="Enter Last Name" type="text">
+    </label>
+    <br>
+    <label><b>Credit Card Number</b></label>
+    <label>
+        <input name="card_number" placeholder="Enter Card Number" type="text">
+    </label>
+    <br>
+    <label><b>Expiration Date</b></label>
+    <label>
+        <input name="expiration" placeholder="Enter Expiration" type="text">
+    </label>
+    <br>
+    <input type="submit" value="pay">
+</form>
+<div id="pay_error_message"></div>
+
 
 <!-- include jQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

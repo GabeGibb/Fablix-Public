@@ -85,13 +85,14 @@ function sortMovies(){
 }
 
 
-// function sortTitle(dir){
-//
-// }
-//
-// function sortRating(dir){
-//
-// }
+function addToCart(id, title){
+    $.ajax("api/cart?id=" + id + "&title=" + title, {
+        method: "POST",
+    });
+    alert("added to cart!");
+}
+
+
 
 function handleStarResult(resultData) {
 
@@ -131,7 +132,8 @@ function handleStarResult(resultData) {
         rowHTML += "<th>" + stars.slice(0, -2) + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
 
-        rowHTML += "<th>" + "Add To Cart" + "</th>";
+        rowHTML += "<th>" + "<button onclick='addToCart(" + '"' + resultData[i]['movie_id'] + '", "' +
+           resultData[i]['movie_title'] + '"' + ")'>"  + "Add To Cart" + "</button></th>";
 
 
         rowHTML += "</tr>";
