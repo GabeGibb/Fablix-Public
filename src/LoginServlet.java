@@ -32,6 +32,11 @@ public class LoginServlet extends HttpServlet {
         }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+
+
+
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -66,7 +71,8 @@ public class LoginServlet extends HttpServlet {
             statement.close();
 
             JsonObject responseJsonObject = new JsonObject();
-            if (username.equals(dbUsername) && password.equals(dbPassword) && !dbUsername.equals("") && !dbPassword.equals("")) {
+            if (username.equals(dbUsername) && password.equals(dbPassword) && !dbUsername.equals("")
+                    && !dbPassword.equals("") && RecaptchaVerifyUtils.verify(gRecaptchaResponse)) {
                 // Login success:
 
                 // set this user into the session
@@ -82,10 +88,13 @@ public class LoginServlet extends HttpServlet {
                 // Log to localhost log
                 request.getServletContext().log("Login failed");
                 // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
-                if (!username.equals(dbUsername)) {
+                if (!username.equals(dbUsername) || username.equals("")) {
                     responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
-                } else {
+                } else if (!password.equals(dbPassword)) {
                     responseJsonObject.addProperty("message", "incorrect password");
+                }
+                else{
+                    responseJsonObject.addProperty("message", "recaptcha failed");
                 }
             }
 
