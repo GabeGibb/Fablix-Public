@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     /**
@@ -68,12 +70,12 @@ public class LoginServlet extends HttpServlet {
                 dbPassword = rs.getString("password");
                 dbId = rs.getString("id");
             }
-
+            System.out.println(dbPassword);
             rs.close();
             statement.close();
 
             JsonObject responseJsonObject = new JsonObject();
-            if (username.equals(dbUsername) && password.equals(dbPassword) && !dbUsername.equals("")
+            if (username.equals(dbUsername) && new StrongPasswordEncryptor().checkPassword(password, dbPassword) && !dbUsername.equals("")
                     && !dbPassword.equals("") && RecaptchaVerifyUtils.verify(gRecaptchaResponse)) {
                 // Login success:
 
@@ -92,7 +94,7 @@ public class LoginServlet extends HttpServlet {
                 // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
                 if (!username.equals(dbUsername) || username.equals("")) {
                     responseJsonObject.addProperty("message", "user " + username + " doesn't exist");
-                } else if (!password.equals(dbPassword)) {
+                } else if (!new StrongPasswordEncryptor().checkPassword(password, dbPassword)) {
                     responseJsonObject.addProperty("message", "incorrect password");
                 }
                 else{
