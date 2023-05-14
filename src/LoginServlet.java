@@ -47,14 +47,16 @@ public class LoginServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
 
             // Declare our statement
-            Statement statement = conn.createStatement();
+
 
             String query = "SELECT customers.email, customers.password, customers.id \n" +
                     "FROM customers\n" +
-                    "WHERE customers.email = '" + username + "';";
+                    "WHERE customers.email = ?;";
 
             // Perform the query
-            ResultSet rs = statement.executeQuery(query);
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 

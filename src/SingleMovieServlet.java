@@ -55,7 +55,7 @@ public class SingleMovieServlet extends HttpServlet {
             // Construct a query with parameter represented by "?"
             String query = "SELECT * \n" +
                     "FROM ratings, movies\n" +
-                    "WHERE movies.id = '" + id + "'" +
+                    "WHERE movies.id = ? " +
                     "AND ratings.movieId = movies.id";
 
             // Declare our statement
@@ -63,7 +63,7 @@ public class SingleMovieServlet extends HttpServlet {
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
-//            statement.setString(1, id);
+            statement.setString(1, id);
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
@@ -83,10 +83,11 @@ public class SingleMovieServlet extends HttpServlet {
                         "FROM genres, movies, genres_in_movies\n" +
                         "WHERE movies.id = genres_in_movies.movieId\n" +
                         "AND genres_in_movies.genreId = genres.id\n" +
-                        "AND movies.id = '" + id + "'" +
+                        "AND movies.id = ? " +
                         "ORDER BY genres.name ASC;";
-                Statement genreStatement = conn.createStatement();
-                ResultSet genreR = genreStatement.executeQuery(genreQ);
+                PreparedStatement genreStatement = conn.prepareStatement(genreQ);
+                genreStatement.setString(1, id);
+                ResultSet genreR = genreStatement.executeQuery();
                 JsonArray genres = new JsonArray();
                 while (genreR.next()){
                     genres.add(genreR.getString("name"));
@@ -98,11 +99,12 @@ public class SingleMovieServlet extends HttpServlet {
                         "FROM stars, movies, stars_in_movies\n" +
                         "WHERE movies.id = stars_in_movies.movieId\n" +
                         "AND stars_in_movies.starId = stars.id\n" +
-                        "AND movies.id = '" + id + "' " +
-                        "ORDER BY stars.name;";;
+                        "AND movies.id = ? " +
+                        "ORDER BY stars.name;";
 
-                Statement starStatement = conn.createStatement();
-                ResultSet starR = starStatement.executeQuery(starQ);
+                PreparedStatement starStatement = conn.prepareStatement(starQ);
+                starStatement.setString(1, id);
+                ResultSet starR = starStatement.executeQuery();
                 JsonArray stars = new JsonArray();
                 JsonArray starsId = new JsonArray();
                 while (starR.next()){
