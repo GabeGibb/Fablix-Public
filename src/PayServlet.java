@@ -53,16 +53,22 @@ public class PayServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
 
             // Declare our statement
-            Statement statement = conn.createStatement();
+
 
             String query = "SELECT * " +
                     "FROM creditcards " +
-                    " WHERE creditcards.id = '" + cardNumber + "' " +
-                    " AND creditcards.firstName = '" + firstName + "' " +
-                    " AND creditcards.lastName = '" + lastName + "' " +
-                    " AND creditcards.expiration = '" + expiration + "'; " ;
+                    " WHERE creditcards.id = ? " +
+                    " AND creditcards.firstName = ? " +
+                    " AND creditcards.lastName = ? " +
+                    " AND creditcards.expiration = ?; " ;
 
-            ResultSet rs = statement.executeQuery(query);
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, cardNumber);
+            statement.setString(2, firstName);
+            statement.setString(3, lastName);
+
+            statement.setString(4, expiration);
+            ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
 
@@ -72,7 +78,7 @@ public class PayServlet extends HttpServlet {
                 dbCard = rs.getString("id");
             }
 
-
+            System.out.println(dbCard);
 
 
             JsonObject responseJsonObject = new JsonObject();
@@ -100,9 +106,13 @@ public class PayServlet extends HttpServlet {
                 for (int i = 0; i < previousMoviesJsonArray.size(); i++) {
                     String movieId = previousMoviesJsonArray.get(i).getAsString().split("#")[1];
                     String insert = "INSERT INTO sales (customerId, movieId, saleDate)\n" +
-                            "VALUES (" + customerId + ", '" + movieId + "', '" + strDate + "');";
+                            "VALUES (?, ?, ?);";
 
-                    statement.execute(insert);
+                    statement = conn.prepareStatement(insert);
+                    statement.setInt(1, Integer.parseInt(customerId));
+                    statement.setString(2, movieId);
+                    statement.setString(3, strDate);
+                    statement.execute();
                 }
 
                 session.setAttribute("previousMovies", null);
