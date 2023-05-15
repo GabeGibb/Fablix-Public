@@ -6,8 +6,8 @@
 </head>
 <body>
 
-<h2>Employee Dashboard</h2>
-<h3>Add A Star</h3>
+<h1 >Employee Dashboard</h1>
+<h2>Add A Star</h2>
 <form id="star_form" method="post" action="#">
     <label><b>Star Name</b></label>
     <label>
@@ -21,7 +21,51 @@
     <input type="submit" value="add-star">
 </form>
 
+<h2>Add A Movie</h2>
+<form id="movie_form" method="post" action="#">
+    <label><b>Movie Title</b></label>
+    <label>
+        <input name="movie-title" placeholder="Enter Title" type="text" required>
+    </label>
+    <br>
 
+    <label><b>Movie Year</b></label>
+    <label>
+        <input name="movie-year" placeholder="Enter Year" type="text" required>
+    </label>
+    <br>
+
+    <label><b>Movie Director</b></label>
+    <label>
+        <input name="movie-director" placeholder="Enter Director" type="text" required>
+    </label>
+    <br>
+
+    <label><b>Movie Rating</b></label>
+    <label>
+        <input name="movie-rating" placeholder="Enter Rating" type="text" required>
+    </label>
+    <br>
+
+    <label><b>Movie Star</b></label>
+    <label>
+        <input name="movie-star" placeholder="Enter Star" type="text" required>
+    </label>
+    <br>
+
+    <label><b>Movie Genre</b></label>
+    <label>
+        <input name="movie-genre" placeholder="Enter Genre" type="text" required>
+    </label>
+    <br>
+
+    <input type="submit" value="add-movie">
+</form>
+
+
+
+<h2>Metadata</h2>
+<div id="metadata"></div>
 <!-- include jQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- include our own JS file -->

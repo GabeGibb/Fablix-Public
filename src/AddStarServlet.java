@@ -59,11 +59,11 @@ public class AddStarServlet extends HttpServlet {
             String newMaxId = "nm" + Integer.toString(newMaxIdNum);
 
             rs.close();
-            System.out.println(1);
+
             String insertStar = "INSERT INTO stars values(?, ?, ?);";
 
             statement = conn.prepareStatement(insertStar);
-
+            System.out.println(1);
             statement.setString(1, newMaxId);
             statement.setString(2, star);
             if (year == null || year == ""){
@@ -71,14 +71,12 @@ public class AddStarServlet extends HttpServlet {
             }else{
                 statement.setInt(3, Integer.parseInt(year));
             }
-
-
-            System.out.println(2);
+            System.out.println(newMaxId);
+            System.out.println(star);
+            System.out.println(year);
             statement.execute();
-            System.out.println(3);
 
             statement.close();
-
 
             response.setStatus(200);
 
