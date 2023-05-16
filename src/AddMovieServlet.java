@@ -87,7 +87,6 @@ public class AddMovieServlet extends HttpServlet {
 
             rs = statement.executeQuery();
 
-
             String dbGenre = "";
             while (rs.next()){
                 dbGenre = rs.getString("name");

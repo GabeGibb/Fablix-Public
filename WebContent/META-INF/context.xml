@@ -2,7 +2,6 @@
 
 <Context>
 
-    <!-- Defines a Data Source Connecting to localhost moviedbexample-->
     <Resource name="jdbc/moviedb"
               auth="Container"
               driverClassName="com.mysql.cj.jdbc.Driver"
