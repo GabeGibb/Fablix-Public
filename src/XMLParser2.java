@@ -212,6 +212,7 @@ public class XMLParser2 {
                     genreIds.put(genre, genreId);
                 }
                 else{
+                    System.out.println("here2.5");
                     genreId = this.genreIds.get(genre);
                 }
                 System.out.println("here3");
