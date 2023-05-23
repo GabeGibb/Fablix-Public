@@ -202,6 +202,7 @@ public class XMLParser2 {
                         genreId = rs.getString("id");
                     }
                     rs.close();
+                    statement.close();
                     System.out.println(dbGenre + genreId);
                     //If genre not in database
                     if (dbGenre == ""){
@@ -223,22 +224,17 @@ public class XMLParser2 {
                 String newMaxId = "tt" + Integer.toString(this.movieIdNum);
                 //genres inserted movie id found, lets add movie
                 this.inserts += " INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n";
-//                Statement s = conn.createStatement();
-//                s.execute(" INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n");
-
 
                 this.movieIds.put(title, newMaxId);
 
 
                 this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
-//                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
                 this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
 
-//                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
                 System.out.println("1");
             }catch(Exception e){
                 fails++;
-                System.out.println(e.getMessage());
+                System.out.println(e);
 
             }
 
