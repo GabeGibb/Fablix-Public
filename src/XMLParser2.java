@@ -188,13 +188,13 @@ public class XMLParser2 {
                 String genreId = "";
 
                 if (!genreIds.containsKey(genre)){
-                    query = "select name, id from genres where genres.name = ?";
-
+                    query = "select name, id from genres where genres.name = '" + genre + "';";
+                    System.out.println(1.1);
                     statement = conn.prepareStatement(query);
-                    statement.setString(1, genre);
-
+//                    statement.setString(1, genre);
+                    System.out.println(1.2);
                     rs = statement.executeQuery();
-
+                    System.out.println(1.3);
                     String dbGenre = "";
                     if (rs.next()){
 
