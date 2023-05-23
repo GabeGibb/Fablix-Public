@@ -39,7 +39,7 @@ public class XMLParser {
         }catch(Exception e){
 
         }
-        
+
         attempts = 0;
         fails = 0;
         System.out.println("Starting parsing");
