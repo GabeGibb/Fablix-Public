@@ -112,24 +112,23 @@ public class XMLParser2 {
         parseCasts();
         System.out.println("Total objects attempted to parse: " + attempts);
         System.out.println("Total objects failed to parse AND add to the database: " + fails);
+        
 
-//        inserts += " COMMIT; ";
+
+        String[] insertsArr = this.inserts.split("\n");
 
 
-//        String[] insertsArr = this.inserts.split("\n");
-//
-//
-//        for (int i = 0; i < insertsArr.length; i++){
-//            try{
-//                Statement statement = conn.createStatement();
-//                statement.execute(insertsArr[i]);
-//
-//                System.out.println("success " + i + " / " + insertsArr.length);
-//            }catch(Exception e){
-//                System.out.println(e.getMessage());
-//                System.out.println(insertsArr[i]);
-//            }
-//        }
+        for (int i = 0; i < insertsArr.length; i++){
+            try{
+                Statement statement = conn.createStatement();
+                statement.execute(insertsArr[i]);
+
+                System.out.println("success " + i + " / " + insertsArr.length);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                System.out.println(insertsArr[i]);
+            }
+        }
         System.out.println("DONE");
 
     }
