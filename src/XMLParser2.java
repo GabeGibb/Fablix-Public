@@ -263,7 +263,7 @@ public class XMLParser2 {
 
                 if (star == null || year ==  null){
                     fails++;
-                    System.out.println("continue");
+//                    System.out.println("continue");
                     continue;
                 }
 
@@ -310,7 +310,7 @@ public class XMLParser2 {
 
                 if (title == null || actor == null){
                     fails++;
-                    System.out.println("continue");
+                    System.out.println("continue1");
                     continue;
                 }
 
@@ -319,12 +319,13 @@ public class XMLParser2 {
 
                 if (movieId == null || starsId == null){
                     fails++;
+                    System.out.println("continue2");
                     continue;
                 }
 
                 this.inserts += " insert into stars_in_movies values('" +starsId + "', '" + movieId+ "'); ";
 
-                System.out.println("3");
+//                System.out.println("3");
 
             }catch(Exception e){
                 fails++;
