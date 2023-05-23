@@ -299,6 +299,7 @@ public class XMLParser2 {
         // get a nodelist of employee Elements, parse each into Employee object
         NodeList nodeList = documentElement.getElementsByTagName("m");
         for (int i = 0; i < nodeList.getLength(); i++) {
+            System.out.println(attempts);
             attempts++;
             // get the employee element
             Element element = (Element) nodeList.item(i);
