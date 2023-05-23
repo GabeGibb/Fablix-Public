@@ -280,7 +280,7 @@ public class XMLParser2 {
 
                 this.starIds.put(star, newMaxId);
 
-//                System.out.println("2");
+                System.out.println("2");
 
             }catch(Exception e){
                 fails++;
