@@ -186,15 +186,15 @@ public class XMLParser2 {
                 ResultSet rs;
 
                 String genreId = "";
-                System.out.println("here1");
+
                 if (!genreIds.containsKey(genre)){
                     query = "select name, id from genres where genres.name = ?";
 
                     statement = conn.prepareStatement(query);
                     statement.setString(1, genre);
-                    System.out.println("here1.5");
+
                     rs = statement.executeQuery();
-                    System.out.println("here2");
+
                     String dbGenre = "";
                     if (rs.next()){
                         dbGenre = rs.getString("name");
@@ -212,10 +212,10 @@ public class XMLParser2 {
                     genreIds.put(genre, genreId);
                 }
                 else{
-                    System.out.println("here2.5");
+
                     genreId = this.genreIds.get(genre);
                 }
-                System.out.println("here3");
+
 
                 //
                 this.movieIdNum++;
