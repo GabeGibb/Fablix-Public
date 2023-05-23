@@ -325,7 +325,7 @@ public class XMLParser2 {
 
                 this.inserts += " insert into stars_in_movies values('" +starsId + "', '" + movieId+ "'); ";
 
-//                System.out.println("3");
+                System.out.println("3");
 
             }catch(Exception e){
                 fails++;
