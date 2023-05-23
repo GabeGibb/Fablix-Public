@@ -188,7 +188,7 @@ public class XMLParser2 {
                 String genreId = "";
 
                 if (!genreIds.containsKey(genre)){
-                    query = "select name, genres.id from genres where genres.name = ?";
+                    query = "select name, id from genres where genres.name = ?";
 
                     statement = conn.prepareStatement(query);
                     statement.setString(1, genre);
@@ -197,11 +197,12 @@ public class XMLParser2 {
 
                     String dbGenre = "";
                     if (rs.next()){
+
                         dbGenre = rs.getString("name");
                         genreId = rs.getString("id");
                     }
                     rs.close();
-
+                    System.out.println(dbGenre + genreId);
                     //If genre not in database
                     if (dbGenre == ""){
                         this.inserts += " INSERT INTO genres (name) values('" + genre + "'); \n";
@@ -221,19 +222,19 @@ public class XMLParser2 {
                 this.movieIdNum++;
                 String newMaxId = "tt" + Integer.toString(this.movieIdNum);
                 //genres inserted movie id found, lets add movie
-//                this.inserts += " INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n";
-                Statement s = conn.createStatement();
-                s.execute(" INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n");
+                this.inserts += " INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n";
+//                Statement s = conn.createStatement();
+//                s.execute(" INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n");
 
 
                 this.movieIds.put(title, newMaxId);
 
 
-//                this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
-                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
-//                this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
+                this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
+//                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
+                this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
 
-                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
+//                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
                 System.out.println("1");
             }catch(Exception e){
                 fails++;
