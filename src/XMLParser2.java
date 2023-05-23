@@ -18,9 +18,7 @@ import java.util.HashMap;
 
 import java.sql.Connection;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.IOException;
+
 
 public class XMLParser2 {
     Document dom;
@@ -105,15 +103,6 @@ public class XMLParser2 {
 //        inserts += " COMMIT; ";
 
 
-        try{
-            FileWriter fileWriter = new FileWriter("inserts.sql");
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.print(this.inserts);
-            printWriter.close();
-
-        }catch (Exception e){
-
-        }
         String[] insertsArr = this.inserts.split("\n");
 
 
