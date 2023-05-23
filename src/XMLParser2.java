@@ -293,6 +293,7 @@ public class XMLParser2 {
 
     private void parseCasts() {
         // get the document root Element
+        System.out.println("start cast parsing for real ");
         Element documentElement = dom.getDocumentElement();
 
         // get a nodelist of employee Elements, parse each into Employee object
@@ -323,7 +324,7 @@ public class XMLParser2 {
 
                 this.inserts += " insert into stars_in_movies values('" +starsId + "', '" + movieId+ "'); ";
 
-//                System.out.println("3");
+                System.out.println("3");
 
             }catch(Exception e){
                 fails++;
