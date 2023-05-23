@@ -205,7 +205,7 @@ public class XMLParser2 {
                     }
                     rs.close();
                     statement.close();
-                    System.out.println(dbGenre + genreId);
+
                     //If genre not in database
                     if (dbGenre == ""){
                         this.inserts += " INSERT INTO genres (name) values('" + genre + "'); \n";
@@ -246,6 +246,7 @@ public class XMLParser2 {
 
     private void parseActors() {
         // get the document root Element
+        System.out.println("start actor parsing for real ");
         Element documentElement = dom.getDocumentElement();
 
         // get a nodelist of employee Elements, parse each into Employee object
