@@ -33,6 +33,8 @@ public class XMLParser2 {
     private int movieIdNum;
     private int starIdNum;
 
+    private int genreIdNum;
+
     private HashMap<String, String> movieIds;
     private HashMap<String, String> starIds;
     private HashMap<String, String> genreIds;
@@ -72,6 +74,17 @@ public class XMLParser2 {
                 maxIdS = rs.getString("max(id)");
             }
             starIdNum = Integer.parseInt(maxIdS.substring(2, maxIdS.length()));
+
+            query = "select max(id) from genre;";
+            // Perform the query
+
+            statement = conn.prepareStatement(query);
+            rs = statement.executeQuery();
+            String maxIdG = "";
+            if (rs.next()){
+                maxIdG = rs.getString("max(id)");
+            }
+            genreIdNum = Integer.parseInt(maxIdG);
 
 
         }catch(Exception e){
@@ -172,8 +185,9 @@ public class XMLParser2 {
                 PreparedStatement statement;
                 ResultSet rs;
 
-                if (!genreIds.containsValue("genre")){
-                    query = "select name from genres where genres.name = ?";
+                String genreId = "";
+                if (!genreIds.containsKey(genre)){
+                    query = "select name,id from genres where genres.name = ?";
 
                     statement = conn.prepareStatement(query);
                     statement.setString(1, genre);
@@ -183,13 +197,21 @@ public class XMLParser2 {
                     String dbGenre = "";
                     if (rs.next()){
                         dbGenre = rs.getString("name");
+                        genreId = rs.getString("id");
                     }
                     rs.close();
 
                     //If genre not in database
                     if (dbGenre == ""){
                         this.inserts += " INSERT INTO genres (name) values('" + genre + "'); \n";
+                        genreIdNum++;
+                        genreId = Integer.toString(genreIdNum);
                     }
+
+                    genreIds.put(genre, genreId);
+                }
+                else{
+                    genreId = this.genreIds.get(genre);
                 }
 
 
@@ -202,23 +224,6 @@ public class XMLParser2 {
 
                 this.movieIds.put(title, newMaxId);
 
-                String genreId;
-                if (!genreIds.containsValue("genre")){
-                    query = "select genres.id from genres where genres.name = ?; ";
-
-                    statement = conn.prepareStatement(query);
-                    statement.setString(1, genre);
-
-                    rs = statement.executeQuery();
-                    genreId = "";
-                    if (rs.next()){
-                        genreId = rs.getString("id");
-                    }
-
-                    this.genreIds.put(genre, genreId);
-                }else{
-                    genreId = this.genreIds.get(genre);
-                }
 
                 this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
                 this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
