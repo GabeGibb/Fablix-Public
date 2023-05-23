@@ -116,20 +116,20 @@ public class XMLParser2 {
 //        inserts += " COMMIT; ";
 
 
-        String[] insertsArr = this.inserts.split("\n");
-
-
-        for (int i = 0; i < insertsArr.length; i++){
-            try{
-                Statement statement = conn.createStatement();
-                statement.execute(insertsArr[i]);
-
-                System.out.println("success " + i + " / " + insertsArr.length);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-                System.out.println(insertsArr[i]);
-            }
-        }
+//        String[] insertsArr = this.inserts.split("\n");
+//
+//
+//        for (int i = 0; i < insertsArr.length; i++){
+//            try{
+//                Statement statement = conn.createStatement();
+//                statement.execute(insertsArr[i]);
+//
+//                System.out.println("success " + i + " / " + insertsArr.length);
+//            }catch(Exception e){
+//                System.out.println(e.getMessage());
+//                System.out.println(insertsArr[i]);
+//            }
+//        }
         System.out.println("DONE");
 
     }
@@ -151,6 +151,7 @@ public class XMLParser2 {
     }
 
     private void parseMovies() {
+
         // get the document root Element
         Element documentElement = dom.getDocumentElement();
 
@@ -221,15 +222,19 @@ public class XMLParser2 {
                 this.movieIdNum++;
                 String newMaxId = "tt" + Integer.toString(this.movieIdNum);
                 //genres inserted movie id found, lets add movie
-                this.inserts += " INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n";
+//                this.inserts += " INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n";
+                Statement s = conn.createStatement();
+                s.execute(" INSERT INTO movies values('" + newMaxId + "', '" + title + "', " + year +", '" + director + "'); \n");
 
 
                 this.movieIds.put(title, newMaxId);
 
 
-                this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
-                this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
+//                this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
+                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
+//                this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
 
+                s.execute(" insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n");
                 System.out.println("1");
             }catch(Exception e){
                 fails++;
