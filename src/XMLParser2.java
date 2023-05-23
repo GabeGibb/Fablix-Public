@@ -182,7 +182,7 @@ public class XMLParser2 {
 
                 //SQL
                 String query;
-                PreparedStatement statement;
+                Statement statement;
                 ResultSet rs;
 
                 String genreId = "";
@@ -190,11 +190,11 @@ public class XMLParser2 {
                 if (!genreIds.containsKey(genre)){
                     query = "select name,id from genres where genres.name = '" + genre + "';";
 
-                    statement = conn.prepareStatement(query);
+                    statement = conn.createStatement();
                     System.out.println(1.1);
 //                    statement.setString(1, genre);
                     System.out.println(1.2);
-                    rs = statement.executeQuery();
+                    rs = statement.executeQuery(query);
                     System.out.println(1.3);
                     String dbGenre = "";
                     if (rs.next()){
