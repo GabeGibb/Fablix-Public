@@ -216,7 +216,7 @@ public class XMLParser2 {
                     genreId = this.genreIds.get(genre);
                 }
 
-
+                System.out.println(3);
                 //
                 this.movieIdNum++;
                 String newMaxId = "tt" + Integer.toString(this.movieIdNum);
