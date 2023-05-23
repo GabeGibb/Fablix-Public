@@ -44,7 +44,7 @@ public class XMLParser2 {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println(1);
             // Connect to the test database
-            conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/moviedb",
                     Parameters.username, Parameters.password);
             System.out.println(1);
 
