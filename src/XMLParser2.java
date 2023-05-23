@@ -187,7 +187,7 @@ public class XMLParser2 {
 
                 String genreId = "";
                 if (!genreIds.containsKey(genre)){
-                    query = "select name,id from genres where genres.name = ?";
+                    query = "select name, id from genres where genres.name = ?";
 
                     statement = conn.prepareStatement(query);
                     statement.setString(1, genre);
@@ -308,13 +308,11 @@ public class XMLParser2 {
                 String movieId = this.movieIds.get(title);
                 String starsId = this.starIds.get(actor);
 
-                if (movieId == "" || starsId == ""){
+                if (movieId == null || starsId == null){
                     fails++;
                     continue;
                 }
-                if (true){
-                    continue;
-                }
+
                 this.inserts += " insert into stars_in_movies values('" +starsId + "', '" + movieId+ "'); ";
 
                 System.out.println("3");
