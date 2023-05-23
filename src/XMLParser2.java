@@ -192,7 +192,7 @@ public class XMLParser2 {
 
                     statement = conn.prepareStatement(query);
                     statement.setString(1, genre);
-
+                    System.out.println("here1.5");
                     rs = statement.executeQuery();
                     System.out.println("here2");
                     String dbGenre = "";
