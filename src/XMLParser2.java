@@ -347,8 +347,7 @@ public class XMLParser2 {
         }
         return textVal;
     }
-
-
+    
 
     public static void main(String[] args) {
         // create an instance
