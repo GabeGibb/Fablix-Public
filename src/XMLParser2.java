@@ -88,7 +88,7 @@ public class XMLParser2 {
 
 
         }catch(Exception e){
-
+            e.getMessage();
         }
 
         this.movieIds = new HashMap<String, String>();
