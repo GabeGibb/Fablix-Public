@@ -76,7 +76,7 @@ public class XMLParser2 {
             }
             starIdNum = Integer.parseInt(maxIdS.substring(2, maxIdS.length()));
 
-            query = "select max(id) from genre;";
+            query = "select max(id) from genres;";
             // Perform the query
 
             statement = conn.prepareStatement(query);
