@@ -112,7 +112,7 @@ public class XMLParser2 {
         parseCasts();
         System.out.println("Total objects attempted to parse: " + attempts);
         System.out.println("Total objects failed to parse AND add to the database: " + fails);
-        
+
 
 
         String[] insertsArr = this.inserts.split("\n");
