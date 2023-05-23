@@ -42,11 +42,11 @@ public class XMLParser2 {
     public void runExample() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-
+            System.out.println(1);
             // Connect to the test database
             conn = DriverManager.getConnection("jdbc:" + Parameters.dbtype + ":///" + Parameters.dbname + "?autoReconnect=true&useSSL=false",
                     Parameters.username, Parameters.password);
-
+            System.out.println(1);
 
             String query;
             PreparedStatement statement;
@@ -57,6 +57,7 @@ public class XMLParser2 {
             // Perform the query
 
             statement = conn.prepareStatement(query);
+            System.out.println(1);
             rs = statement.executeQuery();
             String maxId = "";
             if (rs.next()){
@@ -88,7 +89,7 @@ public class XMLParser2 {
 
             System.out.println("NOPE");
         }catch(Exception e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
         this.movieIds = new HashMap<String, String>();
