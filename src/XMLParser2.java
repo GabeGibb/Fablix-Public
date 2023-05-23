@@ -86,7 +86,7 @@ public class XMLParser2 {
             }
             genreIdNum = Integer.parseInt(maxIdG);
 
-
+            System.out.println("NOPE");
         }catch(Exception e){
             e.getMessage();
         }
@@ -98,20 +98,20 @@ public class XMLParser2 {
         inserts = "";
         attempts = 0;
         fails = 0;
-        System.out.println("Starting parsing 2");
-        System.out.println("Starting main");
-        parseXmlFile("mains243.xml");
-        parseMovies();
-
-        System.out.println("Starting actors");
-        parseXmlFile("actors63.xml");
-        parseActors();
-
-        System.out.println("Starting casts");
-        parseXmlFile("casts124.xml");
-        parseCasts();
-        System.out.println("Total objects attempted to parse: " + attempts);
-        System.out.println("Total objects failed to parse AND add to the database: " + fails);
+//        System.out.println("Starting parsing 2");
+//        System.out.println("Starting main");
+//        parseXmlFile("mains243.xml");
+//        parseMovies();
+//
+//        System.out.println("Starting actors");
+//        parseXmlFile("actors63.xml");
+//        parseActors();
+//
+//        System.out.println("Starting casts");
+//        parseXmlFile("casts124.xml");
+//        parseCasts();
+//        System.out.println("Total objects attempted to parse: " + attempts);
+//        System.out.println("Total objects failed to parse AND add to the database: " + fails);
 
 
 
