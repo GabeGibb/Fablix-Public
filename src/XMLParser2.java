@@ -127,7 +127,7 @@ public class XMLParser2 {
                 System.out.println("success " + i + " / " + insertsArr.length);
             }catch(Exception e){
                 System.out.println(e.getMessage());
-                System.out.println(insertsArr[i]);
+//                System.out.println(insertsArr[i]);
             }
         }
         System.out.println("DONE");
@@ -196,7 +196,7 @@ public class XMLParser2 {
 //                    statement.setString(1, genre);
 
                     rs = statement.executeQuery(query);
-                    
+
                     String dbGenre = "";
                     if (rs.next()){
 
@@ -233,7 +233,7 @@ public class XMLParser2 {
                 this.inserts += " insert into genres_in_movies values(" + genreId + ", '" + newMaxId + "'); \n";
                 this.inserts += " insert into ratings values('" + newMaxId + "', 0, 0); \n";
 
-                System.out.println("1");
+//                System.out.println("1");
             }catch(Exception e){
                 fails++;
                 System.out.println(e);
@@ -279,7 +279,7 @@ public class XMLParser2 {
 
                 this.starIds.put(star, newMaxId);
 
-                System.out.println("2");
+//                System.out.println("2");
 
             }catch(Exception e){
                 fails++;
@@ -320,7 +320,7 @@ public class XMLParser2 {
 
                 this.inserts += " insert into stars_in_movies values('" +starsId + "', '" + movieId+ "'); ";
 
-                System.out.println("3");
+//                System.out.println("3");
 
             }catch(Exception e){
                 fails++;
