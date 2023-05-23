@@ -263,6 +263,7 @@ public class XMLParser2 {
 
                 if (star == null || year ==  null){
                     fails++;
+                    System.out.println("continue");
                     continue;
                 }
 
@@ -308,6 +309,7 @@ public class XMLParser2 {
 
                 if (title == null || actor == null){
                     fails++;
+                    System.out.println("continue");
                     continue;
                 }
 
