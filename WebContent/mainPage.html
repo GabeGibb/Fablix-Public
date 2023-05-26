@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <title>Main Page</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- include jquery autocomplete JS  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
+    <link rel="stylesheet" href="mainPage.css">
 </head>
 <body>
 <a href="cart.html">Go To Cart</a>
+
+<form id="main_search_form" action="movies.html?full-text=true" method="get">
+    <h1>Full Text Search</h1>
+    <label><b>Title</b></label>
+    <label>
+        <input name="title" placeholder="Enter Title" type="text" id="autocomplete">
+    </label>
+    <input name="full-text" value="true" hidden="true">
+    <br>
+    <input type="submit" value="Search">
+</form>
 
 
 
@@ -82,7 +97,8 @@
 <a href="movies.html?title=*Z">Z</a>
 <a href="movies.html?title=*">*</a>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!-- jQuery is required -->
 <!-- include our own JS file -->
 <script src="./mainPage.js"></script>
 

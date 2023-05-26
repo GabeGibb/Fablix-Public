@@ -57,17 +57,7 @@ public class MoviesServlet extends HttpServlet {
 
         pastUrl = fullUrl;
 
-//        if (!pastUrl.equals(fullUrl) && !pastUrl.equals("")){
-////            response.sendRedirect(pastUrl);
-////            newUrl = pastUrl;
-//        }else{
-//            pastUrl = fullUrl;
-//        }
 
-//        System.out.println(pastUrl);
-
-
-//        int curParam = 1;
         ArrayList<String[]> q1Params = new ArrayList<String[]>();
 
         response.setContentType("application/json"); // Response mime type
@@ -77,6 +67,8 @@ public class MoviesServlet extends HttpServlet {
         String urlDirector = request.getParameter("director");
         String urlStar = request.getParameter("star");
         String urlGenre = request.getParameter("genre");
+
+        String fullText = request.getParameter("full-text");
 
 
         String urlStartNumber = request.getParameter("start");
@@ -105,14 +97,32 @@ public class MoviesServlet extends HttpServlet {
             qOptions += " AND genres.name = ? ";
             q1Params.add(new String[]{urlGenre, "string"});
         }if (urlTitle != "" && urlTitle != null){
-            if (urlTitle.startsWith("*")){
-                qOptions += " AND movies.title LIKE ? ";
-                q1Params.add(new String[]{urlTitle.substring(1) + "%", "string"});
-            }else{
-                qOptions += " AND movies.title LIKE ? ";
-                q1Params.add(new String[]{"%" + urlTitle + "%", "string"});
+            if (fullText == null){
+                if (urlTitle.startsWith("*")){
+                    qOptions += " AND movies.title LIKE ? ";
+                    q1Params.add(new String[]{urlTitle.substring(1) + "%", "string"});
+                }
+                else{
+                    qOptions += " AND movies.title LIKE ? ";
+                    q1Params.add(new String[]{"%" + urlTitle + "%", "string"});
+                }
+            }else if (fullText != null){
+                qOptions += " AND MATCH(movies.title) AGAINST (? IN BOOLEAN MODE) ";
+                String words[] = urlTitle.split(" ");
+                String param = "";
+                for (int i = 0; i < words.length; i++){
+                    param += "+";
+                    param += words[i];
+                    param += "* ";
+                }
+
+                q1Params.add(new String[]{param, "string"});
+
+//                System.out.println(param);
             }
+
         }
+
 
         String sortT = request.getParameter("ordert");
         String sortR = request.getParameter("orderr");
