@@ -1,6 +1,8 @@
 VIDEO URL:
 https://docs.google.com/document/d/1iMbMX81w6zsiVN6KwBFXnymgiwuTtRmIrKa7c5Mn3Ws/edit?usp=sharing
 
+PROJECT 3 STUFF:
+
 Files with prepared statements:
 LoginServlet
 MoviesServlet

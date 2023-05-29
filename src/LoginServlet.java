@@ -35,9 +35,7 @@ public class LoginServlet extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-
-
-
+        String isMobile = request.getParameter("mobile");
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -74,9 +72,20 @@ public class LoginServlet extends HttpServlet {
             rs.close();
             statement.close();
 
+            boolean recaptchaGood = true;
+            if (isMobile == null){
+                recaptchaGood = RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+            }else{
+                recaptchaGood = true;
+            }
+
+
+
             JsonObject responseJsonObject = new JsonObject();
             if (username.equals(dbUsername) && new StrongPasswordEncryptor().checkPassword(password, dbPassword) && !dbUsername.equals("")
-                    && !dbPassword.equals("") && RecaptchaVerifyUtils.verify(gRecaptchaResponse)) {
+                    && !dbPassword.equals("") && recaptchaGood) {
+
+
                 // Login success:
 
                 // set this user into the session
@@ -101,6 +110,8 @@ public class LoginServlet extends HttpServlet {
                     responseJsonObject.addProperty("message", "recaptcha failed");
                 }
             }
+
+
 
             response.getWriter().write(responseJsonObject.toString());
 
