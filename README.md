@@ -1,5 +1,5 @@
 VIDEO URL:
-https://docs.google.com/document/d/1iMbMX81w6zsiVN6KwBFXnymgiwuTtRmIrKa7c5Mn3Ws/edit?usp=sharing
+https://clipchamp.com/watch/2YUZ8CY5hqK
 
 PROJECT 4 ANDROID REPO:
 https://github.com/GabeGibb/cs122b-project4-android-example
