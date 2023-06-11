@@ -1,6 +1,6 @@
 
 filename = "search_test.txt"
-f = open(f"target/cs122b-project1-gg/{filename}", "r")
+f = open(f"logs/{filename}", "r")
 lines = f.readlines()
 
 tsTotal = 0
