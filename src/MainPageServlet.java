@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -37,6 +38,16 @@ public class MainPageServlet extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String contextPath = request.getServletContext().getRealPath("/");
+
+        String xmlFilePath=contextPath+"\\test";
+
+        System.out.println(xmlFilePath);
+
+        File myfile = new File(xmlFilePath);
+
+        myfile.createNewFile();
+
         response.setContentType("application/json"); // Response mime type
 
         // Output stream to STDOUT
