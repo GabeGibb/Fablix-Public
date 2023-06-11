@@ -298,7 +298,7 @@ public class MoviesServlet extends HttpServlet {
             System.err.println("IOException: " + ioe.getMessage());
         }
 
-        myfile.createNewFile();
+//        myfile.createNewFile();
 
     }
 }
