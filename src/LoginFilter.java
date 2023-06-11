@@ -55,6 +55,9 @@ public class LoginFilter implements Filter {
         allowedURIs.add("api/employee-login");
         allowedURIs.add("api/employee-dashboard");
         allowedURIs.add("api/_dashboard");
+
+        allowedURIs.add("api/movies");
+        allowedURIs.add("movies.html");
     }
 
     public void destroy() {

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -43,16 +44,8 @@ public class MoviesServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String contextPath = request.getServletContext().getRealPath("/");
+        long tsStartTime = System.nanoTime();
 
-        String xmlFilePath=contextPath+"\\test";
-
-        System.out.println("what" + xmlFilePath);
-
-        File myfile = new File(xmlFilePath);
-
-        myfile.createNewFile();
-        
         StringBuilder requestURL = new StringBuilder(request.getRequestURL().toString());
         String queryString = request.getQueryString();
         String fullUrl;
@@ -152,6 +145,7 @@ public class MoviesServlet extends HttpServlet {
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
+        long tjStartTime = System.nanoTime();
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
@@ -261,7 +255,6 @@ public class MoviesServlet extends HttpServlet {
                 jsonArray.add(jsonObject);
             }
 
-
             rs.close();
             statement.close();
 
@@ -285,8 +278,27 @@ public class MoviesServlet extends HttpServlet {
         } finally {
             out.close();
         }
+        long tsEndTime = System.nanoTime();
+        long tsTime = tsEndTime - tsStartTime;
+        long tjTime = tsEndTime - tjStartTime;
+        String fileText = "TS " + tsTime + " TJ " + tjTime;
 
-        // Always remember to close db connection after usage. Here it's done by try-with-resources
+        String contextPath = request.getServletContext().getRealPath("/");
+        String xmlFilePath=contextPath+"\\search_test.txt";
+        File myfile = new File(xmlFilePath);
+
+        try
+        {
+            FileWriter fw = new FileWriter(xmlFilePath,true); //the true will append the new data
+            fw.write(fileText + "\n");//appends the string to the file
+            fw.close();
+        }
+        catch(IOException ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
+        myfile.createNewFile();
 
     }
 }
