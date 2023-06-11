@@ -101,7 +101,6 @@ function handleStarResult(resultData) {
     let starTableBodyElement = jQuery("#movie_table_body");
 
     if (resultData[0]["new_url"] != ''){
-
         window.location.href = resultData[0]["new_url"];
     }
     for (let i = 1; i < resultData.length; i++) {

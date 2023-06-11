@@ -285,7 +285,7 @@ public class MoviesServlet extends HttpServlet {
 
         String contextPath = request.getServletContext().getRealPath("/");
         String xmlFilePath=contextPath+"\\search_test.txt";
-        File myfile = new File(xmlFilePath);
+//        File myfile = new File(xmlFilePath);
 
         try
         {
