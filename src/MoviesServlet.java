@@ -283,7 +283,7 @@ public class MoviesServlet extends HttpServlet {
         long tjTime = tsEndTime - tjStartTime;
         String fileText = "TS " + tsTime + " TJ " + tjTime;
 
-        String contextPath = request.getServletContext().getRealPath("/");
+        String contextPath = getServletContext().getRealPath("/");
         String xmlFilePath=contextPath+"\\search_test.txt";
         File myfile = new File(xmlFilePath);
 
