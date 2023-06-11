@@ -73,11 +73,11 @@ https://clipchamp.com/watch/2YUZ8CY5hqK
 | Case 3: HTTPS/10 threads                       | img/t3.png                   | ??                         | ??                                  | ??                        | ??                     |
 | Case 4: HTTP/10 threads/No connection pooling  | img/t4.png                   | ??                         | ??                                  | ??                        | ??                     |
 
-| **Scaled Version Test Plan**                   | **Graph Results Screenshot**     | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
-|------------------------------------------------|----------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-| Case 1: HTTP/1 thread                          | img/t2.png                       | ??                         | ??                                  | ??                        | ??           |
-| Case 2: HTTP/10 threads                        | img/t2.png                       | ??                         | ??                                  | ??                        | ??           |
-| Case 3: HTTP/10 threads/No connection pooling  | ![](path to image in img/t7.png) | ??                         | ??                                  | ??                        | ??           |
+| **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
+|------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
+| Case 1: HTTP/1 thread                          | img/t2.png                   | ??                         | ??                                  | ??                        | ??           |
+| Case 2: HTTP/10 threads                        | img/t2.png                   | ??                         | ??                                  | ??                        | ??           |
+| Case 3: HTTP/10 threads/No connection pooling  | ![](img/t7.png)              | ??                         | ??                                  | ??                        | ??           |
 
 
 
