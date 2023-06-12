@@ -1,16 +1,23 @@
-VIDEO URL:
-https://clipchamp.com/watch/2YUZ8CY5hqK
-
 - # General
     - #### Team: gibbler:
 
     - #### Names: Gabriel Gibb:
 
     - #### Project 5 Video Demo Link:
-      - COMPLETE LATER
+      - https://clipchamp.com/watch/sIwQble9QXq
 
     - #### Instruction of deployment:
-      - COMPLETE LATER
+      - Setup ubuntu instance
+      - Install Java on instance
+      - Install MySQL on instance, start it, and create a test user that has all privileges 
+      - Install Tomcat on instane
+      - Clone github repo 
+      - Populate sql data based on the movie-data.sql file in repo
+      - Add the stored procedure from the stored-procedure.sql file
+      - Run UpdateSecurePassword.java on moviedb from this repo https://github.com/UCI-Chenli-teaching/cs122b-project3-encryption-example
+      - Add employee credentials user "classta@email.edu" and password "classta"
+      - Run mvn package in github repo folder
+      - Copy the war file to the tomcat10 webapps folder
 
     - #### Collaborations and Work Distribution:
       - Solo Project, all work done by Gabriel Gibb
@@ -63,7 +70,7 @@ https://clipchamp.com/watch/2YUZ8CY5hqK
     - #### Instructions of how to use the `log_processing.*` script to process the JMeter logs.
         - For jmeter logs, make sure to go into the first line of code in log_processing and change the file name to the corresponding
       text file for any given test. Then, run the python file. The python file will output the average ts and tj time in milliseconds.
-        - NOTE, the log files exist within the target folder however I moved them to their own folder just to be visible in github.
+        - NOTE, the log files exist within the target folder however I moved them to their own folder and changed log processing accordingly just to be visible in github.
 - # JMeter TS/TJ Time Measurement Report
 - Some Notes
   - The average servlet time should be only consistently slightly higher than the JDBC time in all cases, since the bulk of each query
@@ -71,24 +78,26 @@ https://clipchamp.com/watch/2YUZ8CY5hqK
     performing logic based on those queries (meaning that the JDBC time will look relatively high). Single instances should not struggle
     with single threads. Single instances should struggle with multiple threads and the scaled version helps alleviate this problem. In
     any case, non-connection pooled instances should also be slow.
+  - Also, all cases have been done without the XML parser as I never got it to work
 
 | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis (explain)**                                                                                                                                                                                |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Case 1: HTTP/1 thread                          | ![](img/t2.png)              | 116                        | 97                                  | 94                        | When having single threads, the servlet is able to process a request and prepare for the next one after it's done. This allows for a fast ability to process requests.                                |
-| Case 2: HTTP/10 threads                        | ![](img/t3.png)              | 336                        | 323                                 | 320                       | When having multiple threads, our server needs to be able to server requests while taking in incoming requests, leading to a slowdown since our server is trying to do too many things at once.       |
-| Case 3: HTTPS/10 threads                       | ![](img/t4.png)              | 340                        | 317                                 | 314                       | Same reasons as 10 threads http, however https has additional overhead/security that can slow down our queries slightly.                                                                              |
-| Case 4: HTTP/10 threads/No connection pooling  | ![](img/t1.png)              | 350                        | 331                                 | 329                       | This result was done with connection pooling, however a lack of connection pooling means servlets have to keep opening and closing connections which should lead to a slowdown greater than recorded. |
+| Case 1: HTTP/1 thread                          | ![](img/t2.png)              | 116                        | 60                                  | 57                        | When having single threads, the servlet is able to process a request and prepare for the next one after it's done. This allows for a fast ability to process requests.                                |
+| Case 2: HTTP/10 threads                        | ![](img/t3.png)              | 336                        | 264                                 | 261                       | When having multiple threads, our server needs to be able to server requests while taking in incoming requests, leading to a slowdown since our server is trying to do too many things at once.       |
+| Case 3: HTTPS/10 threads                       | ![](img/t4.png)              | 340                        | 272                                 | 270                       | Same reasons as 10 threads http, however https has additional overhead/security that can slow down our queries slightly.                                                                              |
+| Case 4: HTTP/10 threads/No connection pooling  | ![](img/t1.png)              | 350                        | 282                                 | 279                       | This result was done with connection pooling, however a lack of connection pooling means servlets have to keep opening and closing connections which should lead to a slowdown greater than recorded. |
 
 | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis**                                                                                                                                                                                                                                                                                                   |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Case 1: HTTP/1 thread                          | ![](img/t6.png)              | 116                        | 92                                  | 89                        | This result should be comparable to our single instance version, since 1 thread means our servlet serves a connection and once done, processes the next request without having to process multiple things at once.                                                                                             |
-| Case 2: HTTP/10 threads                        | ![](img/t7.png)              | 186                        | 165                                 | 163                       | Although multiple threads will slow us down, the scaled version now has twice the servers running, meaning each servlet could process 5 threads at once instead of 10 at once. This leads to a faster ability to serve multiple users.                                                                         |
-| Case 3: HTTP/10 threads/No connection pooling  | ![](img/t5.png)              | 198                        | 180                                 | 178                       | This result was done with connection pooling, however this should be slower than any of the tests in the scaled version but faster than a non-connection pooled test for our single instance version. This is because we would have to continuously open and close connections instead of using existing ones. |
-
+| Case 1: HTTP/1 thread                          | ![](img/t6.png)              | 116                        | 54                                  | 51                        | This result should be comparable to our single instance version, since 1 thread means our servlet serves a connection and once done, processes the next request without having to process multiple things at once.                                                                                             |
+| Case 2: HTTP/10 threads                        | ![](img/t7.png)              | 186                        | 132                                 | 129                       | Although multiple threads will slow us down, the scaled version now has twice the servers running, meaning each servlet could process 5 threads at once instead of 10 at once. This leads to a faster ability to serve multiple users.                                                                         |
+| Case 3: HTTP/10 threads/No connection pooling  | ![](img/t5.png)              | 198                        | 146                                 | 144                       | This result was done with connection pooling, however this should be slower than any of the tests in the scaled version but faster than a non-connection pooled test for our single instance version. This is because we would have to continuously open and close connections instead of using existing ones. |
 
 
 PROJECT 4 ANDROID REPO:
 https://github.com/GabeGibb/cs122b-project4-android-example
+VIDEO URL:
+https://clipchamp.com/watch/2YUZ8CY5hqK
 
 
 PROJECT 3 STUFF:

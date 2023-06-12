@@ -1,5 +1,5 @@
 
-filename = "search_test.txt"
+filename = "search_test8.txt"
 f = open(f"logs/{filename}", "r")
 lines = f.readlines()
 
