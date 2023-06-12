@@ -4,7 +4,7 @@
     - #### Names: Gabriel Gibb:
 
     - #### Project 5 Video Demo Link:
-      - https://clipchamp.com/watch/sIwQble9QXq
+      - https://docs.google.com/document/d/1OfX4tQXmQ9FUeEnkjxrEZUd2VQ5TmRdv9yqHkH134rY/edit?usp=sharing
 
     - #### Instruction of deployment:
       - Setup ubuntu instance
