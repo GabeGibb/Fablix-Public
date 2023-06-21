@@ -1,3 +1,32 @@
+### Fablix
+This is a full stack web app that was created for a project in databases and websites class. 
+The website is based around users being able to interact with a large movie database in different ways.
+The app has user authentication, search/browse functionality for movies (including information about directors, genres, stars, and release dates), as well as
+a cart and checkout system allowing users to make (fake) purchases. Additionally, there is a built in employee dashboard for database management and updates.
+
+# Websites
+Main Login
+- Username: a@email.com
+- Password: a2
+- Website: http://ec2-35-174-115-101.compute-1.amazonaws.com:8080/cs122b-project1-gg/login.html
+
+Employee Login 
+- Username: classta@email.edu
+- Password: classta
+- Website: http://ec2-35-174-115-101.compute-1.amazonaws.com:8080/cs122b-project1-gg/employee-login.html
+
+# Images
+![image](https://github.com/GabeGibb/fablix/assets/97437160/f556b4e4-bffd-401e-95f0-f87a98fa1734)
+![image](https://github.com/GabeGibb/fablix/assets/97437160/ab00b499-eb9f-4a94-91b4-8fa05f2c7721)
+![image](https://github.com/GabeGibb/fablix/assets/97437160/68c72933-64b9-4cfc-b2c1-57d3f5119727)
+![image](https://github.com/GabeGibb/fablix/assets/97437160/38a89138-242c-4f5e-bd2e-cf4ea19534e1)
+
+
+# Android App
+https://github.com/GabeGibb/fablix-android/tree/main
+
+
+
 - # General
     - #### Team: gibbler:
 
@@ -94,26 +123,3 @@
 | Case 3: HTTP/10 threads/No connection pooling  | ![](img/t5.png)              | 198                        | 146                                 | 144                       | This result was done with connection pooling, however this should be slower than any of the tests in the scaled version but faster than a non-connection pooled test for our single instance version. This is because we would have to continuously open and close connections instead of using existing ones. |
 
 
-PROJECT 4 ANDROID REPO:
-https://github.com/GabeGibb/cs122b-project4-android-example
-VIDEO URL:
-https://clipchamp.com/watch/2YUZ8CY5hqK
-
-
-PROJECT 3 STUFF:
-
-Files with prepared statements:
-LoginServlet
-MoviesServlet
-SingleMovieServlet 
-SingleStarServlet 
-PayServlet
-
-
-XML Optimization:
-In order to optimize, incorporating executing a whole line of insert statements, as opposed to making a connection and separate execute statement
-for each single insert would allow a large amount of optimization for lots of insertion statements.
-Another optimization would be storing an id value for movies or stars and incrementing it and saving it, as opposed to looking up the highest
-id value through a query.
-These two optimization can offer significant speed advantages over a naive approach that executes multiple individual querys and execute statements.
-Making sure print statements are sparring is also significant in improving speed.
