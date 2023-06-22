@@ -8,12 +8,12 @@ a cart and checkout system allowing users to make (fake) purchases. Additionally
 Main Login
 - Username: a@email.com
 - Password: a2
-- Website: http://ec2-35-174-115-101.compute-1.amazonaws.com:8080/cs122b-project1-gg/login.html
+- Website: http://50.16.192.214:8080/cs122b-project1-gg/login.html
 
 Employee Login 
 - Username: classta@email.edu
 - Password: classta
-- Website: http://ec2-35-174-115-101.compute-1.amazonaws.com:8080/cs122b-project1-gg/employee-login.html
+- Website: http://50.16.192.214:8080/cs122b-project1-gg/employee-login.html
 
 # Images
 ![image](https://github.com/GabeGibb/fablix/assets/97437160/f556b4e4-bffd-401e-95f0-f87a98fa1734)
