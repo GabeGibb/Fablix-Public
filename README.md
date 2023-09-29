@@ -16,10 +16,7 @@ Employee Login
 - Website: http://50.16.192.214:8080/cs122b-project1-gg/employee-login.html
 
 # Images
-![image](https://github.com/GabeGibb/fablix/assets/97437160/f556b4e4-bffd-401e-95f0-f87a98fa1734)
-![image](https://github.com/GabeGibb/fablix/assets/97437160/ab00b499-eb9f-4a94-91b4-8fa05f2c7721)
-![image](https://github.com/GabeGibb/fablix/assets/97437160/68c72933-64b9-4cfc-b2c1-57d3f5119727)
-![image](https://github.com/GabeGibb/fablix/assets/97437160/38a89138-242c-4f5e-bd2e-cf4ea19534e1)
+
 
 
 # Android App
