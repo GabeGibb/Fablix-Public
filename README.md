@@ -15,7 +15,6 @@ Employee Login
 - Password: classta
 - Website: http://50.16.192.214:8080/cs122b-project1-gg/employee-login.html
 
-# Images
 
 
 
