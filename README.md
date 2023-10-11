@@ -6,13 +6,9 @@ a cart and checkout system allowing users to make (fake) purchases. Additionally
 
 # Websites
 Main Login
-- Username: a@email.com
-- Password: a2
 - Website: http://50.16.192.214:8080/cs122b-project1-gg/login.html
 
 Employee Login 
-- Username: classta@email.edu
-- Password: classta
 - Website: http://50.16.192.214:8080/cs122b-project1-gg/employee-login.html
 
 
